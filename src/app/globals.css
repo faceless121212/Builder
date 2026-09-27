@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+/* Figure.09 — "Blueprint" design tokens */
+:root {
+  --paper: #f3f5fa;
+  --surface: #ffffff;
+  --surface-2: #eef1f8;
+  --ink: #181941;
+  --muted: #5d6385;
+  --line: #d6dbe8;
+  --grid: rgba(24, 25, 65, 0.055);
+  --accent: #ff5a1f;
+  --accent-ink: #ffffff;
+  --accent-soft: #ffe7dc;
+  --danger: #d92d20;
+  --shadow: 0 1px 0 rgba(24, 25, 65, 0.06), 0 8px 24px -12px rgba(24, 25, 65, 0.18);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0c0d22;
+    --surface: #14163a;
+    --surface-2: #1b1e48;
+    --ink: #e8ebf8;
+    --muted: #9ba1c6;
+    --line: #2a2e5e;
+    --grid: rgba(155, 170, 255, 0.06);
+    --accent: #ff7043;
+    --accent-ink: #1a0a03;
+    --accent-soft: #3a1d1a;
+    --danger: #ff6b5e;
+    --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 10px 30px -14px rgba(0, 0, 0, 0.7);
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-grotesk);
+  --font-mono: var(--font-mono-jb);
+  --shadow-card: var(--shadow);
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--paper);
+  /* Drafting-paper grid */
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-attachment: fixed;
+  color: var(--ink);
+}
+
+/* 16px minimum stops iOS from zooming into focused inputs */
+input,
+textarea {
+  font-size: max(16px, 1em);
+}
+
+.empty-illustration {
+  background-color: var(--ink);
+  -webkit-mask: url("/empty-state.png") center / contain no-repeat;
+  mask: url("/empty-state.png") center / contain no-repeat;
+}
+
+.safe-bottom {
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+}
+
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.animate-sheet-up { animation: sheet-up 220ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+.animate-fade-in { animation: fade-in 160ms ease-out; }
+.animate-pop-in { animation: pop-in 200ms ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-sheet-up, .animate-fade-in, .animate-pop-in { animation: none; }
+}
